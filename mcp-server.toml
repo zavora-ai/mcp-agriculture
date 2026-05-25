@@ -1,0 +1,272 @@
+server_id = "mcp_agriculture"
+display_name = "Agriculture"
+version = "1.0.0"
+domain = "agriculture"
+sdk_version = "0.1.0"
+risk_level = "medium"
+writes_allowed = "gated"
+transports = ["stdio"]
+credentials = ["vault://agtech-api-key", "vault://openweather-key", "vault://sentinel-hub-key", "vault://market-api-key", "vault://thingsboard-token"]
+governance_gates = []
+environments = ["development", "staging", "production"]
+
+# ─── Fields (5) ───────────────────────────────────────────────────────────────
+
+[[tools]]
+name = "list_fields"
+description = "List all farm fields/plots"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "get_field"
+description = "Get field details including area, location, soil type, and current crop"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "create_field"
+description = "Register a new field/plot"
+risk_class = "internal_write"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "update_field"
+description = "Update field details"
+risk_class = "internal_write"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "delete_field"
+description = "Remove a field from the farm"
+risk_class = "internal_write"
+requires_approval = true
+credential_bindings = ["vault://agtech-api-key"]
+
+# ─── Crops (5) ────────────────────────────────────────────────────────────────
+
+[[tools]]
+name = "list_crops"
+description = "List crops planted across all fields"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "get_crop"
+description = "Get crop details including growth stage, planting date, and expected harvest"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "plant_crop"
+description = "Record a new crop planting on a field"
+risk_class = "internal_write"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "get_crop_calendar"
+description = "Get recommended planting/harvesting calendar for a crop in a region"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "log_harvest"
+description = "Record a harvest with yield data"
+risk_class = "internal_write"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+# ─── Activities (3) ───────────────────────────────────────────────────────────
+
+[[tools]]
+name = "log_activity"
+description = "Log a farm activity (irrigation, fertilizer, spraying, weeding)"
+risk_class = "internal_write"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "list_activities"
+description = "List farm activities with optional field/date filter"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "get_activity_summary"
+description = "Get activity summary and costs for a period"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+# ─── Weather (4) ──────────────────────────────────────────────────────────────
+
+[[tools]]
+name = "get_forecast"
+description = "Get 7-day weather forecast for a field location"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://openweather-key"]
+
+[[tools]]
+name = "get_historical_weather"
+description = "Get historical weather data for a date range"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://openweather-key"]
+
+[[tools]]
+name = "get_weather_alerts"
+description = "Get active weather alerts (frost, drought, heavy rain)"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://openweather-key"]
+
+[[tools]]
+name = "get_growing_degree_days"
+description = "Calculate growing degree days (GDD) for crop maturity estimation"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://openweather-key"]
+
+# ─── Satellite (4) ────────────────────────────────────────────────────────────
+
+[[tools]]
+name = "get_field_ndvi"
+description = "Get NDVI (vegetation index) for a field — indicates crop health"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://sentinel-hub-key"]
+
+[[tools]]
+name = "get_crop_health"
+description = "Get crop health assessment from satellite imagery"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://sentinel-hub-key"]
+
+[[tools]]
+name = "detect_anomalies"
+description = "Detect field anomalies (water stress, pest damage, nutrient deficiency)"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://sentinel-hub-key"]
+
+[[tools]]
+name = "get_field_boundary"
+description = "Get field boundary polygon from satellite"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://sentinel-hub-key"]
+
+# ─── Market (5) ───────────────────────────────────────────────────────────────
+
+[[tools]]
+name = "get_commodity_price"
+description = "Get current price for a commodity (coffee, tea, maize, wheat)"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://market-api-key"]
+
+[[tools]]
+name = "get_price_history"
+description = "Get historical price data for a commodity"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://market-api-key"]
+
+[[tools]]
+name = "get_market_trends"
+description = "Get market trend analysis and price predictions"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://market-api-key"]
+
+[[tools]]
+name = "list_commodities"
+description = "List available commodities with current prices"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://market-api-key"]
+
+[[tools]]
+name = "get_best_sell_time"
+description = "Get recommended best time to sell based on price trends and storage costs"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://market-api-key"]
+
+# ─── IoT (4) ──────────────────────────────────────────────────────────────────
+
+[[tools]]
+name = "list_sensors"
+description = "List IoT sensors deployed on the farm"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://thingsboard-token"]
+
+[[tools]]
+name = "get_sensor_reading"
+description = "Get latest reading from a specific sensor"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://thingsboard-token"]
+
+[[tools]]
+name = "get_soil_moisture"
+description = "Get soil moisture readings for a field"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://thingsboard-token"]
+
+[[tools]]
+name = "get_rainfall"
+description = "Get rainfall data from rain gauges"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://thingsboard-token"]
+
+# ─── Yield & Alerts (5) ──────────────────────────────────────────────────────
+
+[[tools]]
+name = "estimate_yield"
+description = "Estimate expected yield based on weather, NDVI, and historical data"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "get_harvest_history"
+description = "Get historical harvest data for a field"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "compare_seasons"
+description = "Compare current season performance against previous seasons"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "get_pest_alerts"
+description = "Get pest and disease alerts for the region"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]
+
+[[tools]]
+name = "get_disease_risk"
+description = "Get disease risk assessment based on weather and crop conditions"
+risk_class = "read_only"
+requires_approval = false
+credential_bindings = ["vault://agtech-api-key"]

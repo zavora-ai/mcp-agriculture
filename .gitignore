@@ -1,0 +1,4 @@
+/target
+example-backend/target
+.env
+*.db
