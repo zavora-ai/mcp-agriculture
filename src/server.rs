@@ -18,7 +18,7 @@ macro_rules! ok_or_err {
     };
 }
 
-#[tool_router(server_handler)]
+#[tool_router]
 impl AgricultureServer {
     // ─── Fields (5) ──────────────────────────────────────────────────────────
 
@@ -281,4 +281,11 @@ impl AgricultureServer {
         if let Some(ref f) = input.field_id { fid = f.clone(); params.push(("field_id", fid.as_str())); }
         ok_or_err!(self.client.get_query("/alerts/disease-risk", &params).await)
     }
+}
+
+adk_mcp_sdk::mcp_2026_server! {
+    server: AgricultureServer,
+    task_tools: ["get_forecast"],
+    approval_tools: ["delete_field"],
+    cache_ttl_ms: 60_000,
 }

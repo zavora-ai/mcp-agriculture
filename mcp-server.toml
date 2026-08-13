@@ -1,16 +1,14 @@
 server_id = "mcp_agriculture"
 display_name = "Agriculture"
-version = "1.0.1"
+version = "1.1.0"
 domain = "agriculture"
-sdk_version = "0.1.0"
+sdk_version = "0.2.0"
 risk_level = "medium"
 writes_allowed = "gated"
 transports = ["stdio"]
 credentials = ["vault://agtech-api-key", "vault://openweather-key", "vault://sentinel-hub-key", "vault://market-api-key", "vault://thingsboard-token"]
-governance_gates = []
+governance_gates = ["mrtr_approval"]
 environments = ["development", "staging", "production"]
-
-# ─── Fields (5) ───────────────────────────────────────────────────────────────
 
 [[tools]]
 name = "list_fields"
@@ -47,8 +45,6 @@ risk_class = "internal_write"
 requires_approval = true
 credential_bindings = ["vault://agtech-api-key"]
 
-# ─── Crops (5) ────────────────────────────────────────────────────────────────
-
 [[tools]]
 name = "list_crops"
 description = "List crops planted across all fields"
@@ -84,8 +80,6 @@ risk_class = "internal_write"
 requires_approval = false
 credential_bindings = ["vault://agtech-api-key"]
 
-# ─── Activities (3) ───────────────────────────────────────────────────────────
-
 [[tools]]
 name = "log_activity"
 description = "Log a farm activity (irrigation, fertilizer, spraying, weeding)"
@@ -106,8 +100,6 @@ description = "Get activity summary and costs for a period"
 risk_class = "read_only"
 requires_approval = false
 credential_bindings = ["vault://agtech-api-key"]
-
-# ─── Weather (4) ──────────────────────────────────────────────────────────────
 
 [[tools]]
 name = "get_forecast"
@@ -137,8 +129,6 @@ risk_class = "read_only"
 requires_approval = false
 credential_bindings = ["vault://openweather-key"]
 
-# ─── Satellite (4) ────────────────────────────────────────────────────────────
-
 [[tools]]
 name = "get_field_ndvi"
 description = "Get NDVI (vegetation index) for a field — indicates crop health"
@@ -166,8 +156,6 @@ description = "Get field boundary polygon from satellite"
 risk_class = "read_only"
 requires_approval = false
 credential_bindings = ["vault://sentinel-hub-key"]
-
-# ─── Market (5) ───────────────────────────────────────────────────────────────
 
 [[tools]]
 name = "get_commodity_price"
@@ -204,8 +192,6 @@ risk_class = "read_only"
 requires_approval = false
 credential_bindings = ["vault://market-api-key"]
 
-# ─── IoT (4) ──────────────────────────────────────────────────────────────────
-
 [[tools]]
 name = "list_sensors"
 description = "List IoT sensors deployed on the farm"
@@ -233,8 +219,6 @@ description = "Get rainfall data from rain gauges"
 risk_class = "read_only"
 requires_approval = false
 credential_bindings = ["vault://thingsboard-token"]
-
-# ─── Yield & Alerts (5) ──────────────────────────────────────────────────────
 
 [[tools]]
 name = "estimate_yield"
